@@ -1,9 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #252525;
     color: #efefef;
-    margin: 0;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px 0;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -14,14 +23,23 @@ h1 {
 
 .video-container {
     position: relative;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    min-height: 0;
     margin-bottom: 20px;
+    max-height: calc(100vh - 200px);
 }
 
 .video-feed {
     display: block;
     max-width: 100%;
     height: auto;
+    width: 100%;
+    object-fit: contain;
+    max-height: 100%;
 }
 
 .countdown-overlay {
@@ -58,6 +76,7 @@ h1 {
 .controls {
     text-align: center;
     margin-top: 20px;
+    flex-shrink: 0;
 }
 
 .counter {
@@ -69,6 +88,9 @@ h1 {
     font-weight: bold;
     font-size: 1.5em;
     margin: 0 10px;
+    display: inline-block;
+    min-width: 2ch;
+    text-align: center;
 }
 
 .btn {
