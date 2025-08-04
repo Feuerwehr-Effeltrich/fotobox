@@ -8,7 +8,12 @@
 </head>
 <body>
     <h1>📸 Fotobox</h1>
-    <img src="/video_feed" alt="Live Video Feed" class="video-feed">
+    <div class="video-container">
+        <img src="/video_feed" alt="Live Video Feed" class="video-feed">
+        <div class="countdown-overlay" id="countdownOverlay">
+            <div class="countdown-number" id="overlayCountdown">5</div>
+        </div>
+    </div>
     <div class="controls">
         <div class="counter">
             <span class="label">Countdown:</span>

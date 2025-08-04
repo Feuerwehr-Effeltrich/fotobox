@@ -10,6 +10,8 @@ class FotoboxController {
         this.countdownInterval = null;
 
         this.countdownElement = document.querySelector('.countdown-value');
+        this.overlayCountdown = document.getElementById('overlayCountdown');
+        this.countdownOverlay = document.getElementById('countdownOverlay');
         this.captureButton = document.getElementById('captureButton');
         this.decreaseButton = document.getElementById('decreaseButton');
         this.increaseButton = document.getElementById('increaseButton');
@@ -44,6 +46,10 @@ class FotoboxController {
         this.countdownElement.textContent = this.countdown;
     }
 
+    updateOverlayCountdown() {
+        this.overlayCountdown.textContent = this.countdown;
+    }
+
     startCountdown() {
         this.resetValue = this.countdown;
         this.isRunning = true;
@@ -51,9 +57,13 @@ class FotoboxController {
         this.decreaseButton.disabled = true;
         this.increaseButton.disabled = true;
 
+        // Show the overlay and start with the initial countdown value
+        this.countdownOverlay.classList.add('active');
+        this.updateOverlayCountdown();
+
         this.countdownInterval = setInterval(() => {
             this.countdown--;
-            this.updateCountdownDisplay();
+            this.updateOverlayCountdown();
 
             if (this.countdown <= 0) {
                 this.stopCountdown();
@@ -72,6 +82,9 @@ class FotoboxController {
         this.captureButton.disabled = false;
         this.decreaseButton.disabled = false;
         this.increaseButton.disabled = false;
+
+        // Hide the overlay
+        this.countdownOverlay.classList.remove('active');
 
         this.countdown = this.resetValue;
         this.updateCountdownDisplay();
