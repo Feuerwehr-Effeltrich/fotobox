@@ -1,6 +1,4 @@
 const START_VALUE = 5;
-const MAX_VALUE = 20;
-const MIN_VALUE = 1;
 
 class FotoboxController {
     constructor() {
@@ -28,7 +26,6 @@ class FotoboxController {
     }
 
     startCountdown() {
-        this.resetValue = this.countdown;
         this.isRunning = true;
         this.captureButton.disabled = true;
 
