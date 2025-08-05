@@ -1,6 +1,8 @@
 # Fotobox
 
-
+Eine einfach zu bedienende Selfie-Box-Software für Events, Partys oder Fotoprojekte.
+Sie zeigt einen Live-Video-Feed einer angeschlossenen Digitalkamera (per Capturecard) im Browser an und ermöglicht es, per Knopfdruck Fotos über einen GPIO-Relais-geschalteten Auslöser aufzunehmen.
+Die Steuerung erfolgt bequem über eine Weboberfläche – ideal für Touchscreens oder Tablets.
 
 ## Erste Schritte
 
