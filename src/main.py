@@ -4,14 +4,16 @@ from flask import Flask, Response
 from videofeed import frames
 from gpio import gpio_capture
 
+import cfg
+
 app = Flask(__name__)
 app.static_folder = 'static'
 
 @app.route('/video_feed')
 def video_feed():
-    # image for testing
-    return Response(open('static/cookie.webp', 'rb').read(), mimetype='image/webp')
-    # return Response(frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    if cfg.static_image: # image for testing
+        return Response(open('static/cookie.webp', 'rb').read(), mimetype='image/webp')
+    return Response(frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.post('/capture')
 def capture():
@@ -31,4 +33,4 @@ def catch_all(path):
     return app.send_static_file(path)
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", 5000)
+    app.run(cfg.addr, cfg.port)
