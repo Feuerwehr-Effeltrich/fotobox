@@ -5,19 +5,14 @@ const MIN_VALUE = 1;
 class FotoboxController {
     constructor() {
         this.countdown = START_VALUE;
-        this.resetValue = START_VALUE;
         this.isRunning = false;
         this.countdownInterval = null;
 
-        this.countdownElement = document.querySelector('.countdown-value');
         this.overlayCountdown = document.getElementById('overlayCountdown');
         this.countdownOverlay = document.getElementById('countdownOverlay');
         this.captureButton = document.getElementById('captureButton');
-        this.decreaseButton = document.getElementById('decreaseButton');
-        this.increaseButton = document.getElementById('increaseButton');
 
         this.initializeEventListeners();
-        this.updateCountdownDisplay();
     }
 
     initializeEventListeners() {
@@ -26,24 +21,6 @@ class FotoboxController {
                 this.startCountdown();
             }
         });
-
-        this.decreaseButton.addEventListener('click', () => {
-            if (!this.isRunning && this.countdown > MIN_VALUE) {
-                this.countdown--;
-                this.updateCountdownDisplay();
-            }
-        });
-
-        this.increaseButton.addEventListener('click', () => {
-            if (!this.isRunning && this.countdown < MAX_VALUE) {
-                this.countdown++;
-                this.updateCountdownDisplay();
-            }
-        });
-    }
-
-    updateCountdownDisplay() {
-        this.countdownElement.textContent = this.countdown;
     }
 
     updateOverlayCountdown() {
@@ -54,8 +31,6 @@ class FotoboxController {
         this.resetValue = this.countdown;
         this.isRunning = true;
         this.captureButton.disabled = true;
-        this.decreaseButton.disabled = true;
-        this.increaseButton.disabled = true;
 
         // Show the overlay and start with the initial countdown value
         this.countdownOverlay.classList.add('active');
@@ -80,14 +55,11 @@ class FotoboxController {
 
         this.isRunning = false;
         this.captureButton.disabled = false;
-        this.decreaseButton.disabled = false;
-        this.increaseButton.disabled = false;
 
         // Hide the overlay
         this.countdownOverlay.classList.remove('active');
 
-        this.countdown = this.resetValue;
-        this.updateCountdownDisplay();
+        this.countdown = START_VALUE;
     }
 
     async capturePhoto() {
