@@ -19,7 +19,7 @@ Editiere die [cfg.py](/src/cfg.py).
 | Einstellung | Effekt |
 |---|---|
 | `static_image` | Zeige ein statisches Bild (ein "Cookie-Banner") statt Video-Feed |
-| `video_device` | Pfad zur Webcam/Capturecard, zB auch `dev/v4l/by-id/...` |
+| `video_device` | Pfad zur Webcam/Capturecard, zB `/dev/v4l/by-id/...` |
 | `addr` | Bind-Adresse des Webservers |
 | `port` | Port des Webservers |
 
