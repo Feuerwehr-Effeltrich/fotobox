@@ -1,0 +1,35 @@
+- name: Deploy Fotobox
+  hosts: all
+  tasks:
+
+    - name: Update System
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+        autoremove: true
+      register: apt
+
+    - name: Reboot on package changes
+      become: true
+      ansible.builtin.reboot:
+        reboot_timeout: 300
+      when: apt.changed # noqa: no-handler
+
+    - name: Stop old Fotobox
+      ansible.builtin.debug:
+
+    - name: Remove old Fotobox
+      ansible.builtin.debug:
+
+    - name: Sync directory
+      ansible.builtin.debug:
+
+    - name: Install venv
+      ansible.builtin.debug:
+
+    - name: Create autostart
+      ansible.builtin.debug:
+
+    - name: Invoke
+      ansible.builtin.debug:
