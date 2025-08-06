@@ -1,0 +1,90 @@
+- name: Deploy Fotobox
+  hosts: all
+  tasks:
+
+    - name: Update System (can take a while)
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+        autoremove: true
+
+    - name: Disable low-voltage popup (but keep kernel messages) # noqa: risky-file-permissions
+      become: true
+      ansible.builtin.lineinfile:
+        path: /boot/config.txt
+        regexp: '^avoid_warnings='
+        line: 'avoid_warnings=1'
+        create: true
+        backrefs: true
+
+    # - name: Remove mouse cursor (pointer)
+    #   become: true
+    #   ansible.builtin.command: mv /usr/share/icons/PiXflat/cursors/left_ptr /usr/share/icons/PiXflat/cursors/left_ptr.bak
+    #   args:
+    #     creates: /usr/share/icons/PiXflat/cursors/left_ptr.bak
+
+    - name: Ensure font directory exists
+      ansible.builtin.file:
+        path: .fonts
+        mode: '0755'
+        state: directory
+
+    - name: Install emoji font
+      ansible.builtin.get_url:
+        url: https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+        dest: .fonts/NotoColorEmoji.ttf
+        mode: '0644'
+
+    - name: Sync directory
+      ansible.posix.synchronize:
+        src: "{{ cwd }}"
+        dest: .
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude .git"
+          - "--exclude .ansible"
+          - "--exclude .venv"
+          - "--exclude .vscode"
+          - "--exclude '*.pyc'"
+          - "--exclude '*.yml'"
+
+    # normally done with ansible.builtin.pip, but that seems broken
+    - name: Create venv
+      ansible.builtin.command: python3 -m venv .venv
+      args:
+        chdir: fotobox
+        creates: fotobox/.venv/bin/activate
+      register: venv
+
+    - name: Install venv packages # noqa: no-changed-when
+      ansible.builtin.command: ./.venv/bin/pip install -r requirements.txt
+      args:
+        chdir: fotobox
+      when: venv.changed # noqa: no-handler
+
+    - name: Ensure autostart directory exists
+      ansible.builtin.file:
+        path: .config/autostart
+        mode: '0755'
+        state: directory
+
+    - name: Create autostart
+      ansible.builtin.copy:
+        remote_src: true
+        src: fotobox/deploy/fotobox.desktop
+        dest: .config/autostart/fotobox.desktop
+        mode: '0755'
+
+    - name: Copy autostart to desktop
+      ansible.builtin.copy:
+        remote_src: true
+        src: fotobox/deploy/fotobox.desktop
+        dest: Desktop/fotobox.desktop
+        mode: '0755'
+
+    - name: Reboot
+      become: true
+      ansible.builtin.reboot:
+        reboot_timeout: 300

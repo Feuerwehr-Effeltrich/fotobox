@@ -2,4 +2,8 @@
 
 HOST='fotobox'
 
-ansible-playbook -i "$HOST", ansible.yml
+set -e
+
+cd $(dirname $0)
+
+ansible-playbook -i "$HOST", -e "cwd=$(pwd)" deploy/ansible_deploy.yml

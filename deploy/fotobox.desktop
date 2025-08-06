@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Fotobox
+Comment=Fotobox
+Type=Application
+Exec=/bin/sh -c "$HOME/fotobox/deploy/raspi_fotobox_run.sh"
+Terminal=false
