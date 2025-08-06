@@ -2,31 +2,49 @@
   hosts: all
   tasks:
 
-    - name: Update System
-      become: true
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: full
-        autoremove: true
-      register: apt
+    # - name: Update System (can take a while)
+    #   become: true
+    #   ansible.builtin.apt:
+    #     update_cache: true
+    #     upgrade: full
+    #     autoremove: true
+    #   register: apt
 
-    - name: Reboot on package changes
-      become: true
-      ansible.builtin.reboot:
-        reboot_timeout: 300
-      when: apt.changed # noqa: no-handler
+    # - name: Reboot on package changes
+    #   become: true
+    #   ansible.builtin.reboot:
+    #     reboot_timeout: 300
+    #   when: apt.changed # noqa: no-handler
 
     - name: Stop old Fotobox
       ansible.builtin.debug:
 
-    - name: Remove old Fotobox
-      ansible.builtin.debug:
-
     - name: Sync directory
-      ansible.builtin.debug:
+      ansible.posix.synchronize:
+        src: .
+        dest: .
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude .git"
+          - "--exclude .ansible"
+          - "--exclude .venv"
+          - "--exclude .vscode"
+          - "--exclude '*.pyc'"
 
-    - name: Install venv
-      ansible.builtin.debug:
+    # normally done with ansible.builtin.pip, but that seems broken
+    - name: Create venv
+      ansible.builtin.command: python3 -m venv .venv
+      args:
+        chdir: fotobox
+        creates: fotobox/.venv/bin/activate
+      register: venv
+
+    - name: Install venv packages # noqa: no-changed-when
+      ansible.builtin.command: ./.venv/bin/pip install -r requirements.txt
+      args:
+        chdir: fotobox
+      when: venv.changed # noqa: no-handler
 
     - name: Create autostart
       ansible.builtin.debug:
