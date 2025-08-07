@@ -9,6 +9,15 @@
         upgrade: full
         autoremove: true
 
+    - name: Install packages
+      become: true
+      ansible.builtin.apt:
+        name:
+          - python3-rpi.gpio
+          - pigpio
+          - python3-pigpio
+        state: present
+
     - name: Disable low-voltage popup (but keep kernel messages) # noqa: risky-file-permissions
       become: true
       ansible.builtin.lineinfile:

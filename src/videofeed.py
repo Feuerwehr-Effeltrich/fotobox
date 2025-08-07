@@ -2,8 +2,8 @@ import cv2
 import cfg
 
 camera = cv2.VideoCapture(cfg.video_device)
-camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 def frames():
     while True:

@@ -37,6 +37,7 @@ Editiere die [cfg.py](/src/cfg.py).
 | `video_device` | Pfad zur Webcam/Capturecard, zB `/dev/v4l/by-id/...` |
 | `addr` | Bind-Adresse des Webservers |
 | `port` | Port des Webservers |
+| `gpio_pin` | GPIO Pin für den Auslöser |
 
 ## Bilder
 
