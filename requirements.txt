@@ -2,3 +2,4 @@ opencv-python
 flask
 gpiozero
 rpi.gpio
+pyserial

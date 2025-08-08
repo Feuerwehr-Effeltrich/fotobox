@@ -1,5 +1,8 @@
 # Fotobox
 
+> [!WARNING]
+> Dieses Projekt ist noch sehr WIP und mit viel Bastelei verbunden!
+
 Eine einfach zu bedienende Selfie-Box-Software für Events, Partys oder Fotoprojekte, speziell für Raspberry Pi.
 Sie zeigt einen Live-Video-Feed einer angeschlossenen Digitalkamera (per Capturecard) im Browser an und ermöglicht es, per Knopfdruck Fotos über einen GPIO-Relais-geschalteten Auslöser aufzunehmen.
 Die Steuerung erfolgt bequem über eine Weboberfläche – ideal für Touchscreens oder Tablets.
