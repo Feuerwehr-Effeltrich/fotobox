@@ -9,5 +9,5 @@ GPIO.setup(cfg.gpio_pin, GPIO.OUT)
 
 def gpio_capture():
     GPIO.output(cfg.gpio_pin, True)
-    sleep(2)
+    sleep(4)
     GPIO.output(cfg.gpio_pin, False)
